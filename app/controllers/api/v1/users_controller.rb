@@ -1,12 +1,13 @@
-class Api::V1::UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create, :index, :show], raise: false 
+class API::V1::UsersController < ApplicationController
+    skip_before_action :authorized, only: [:create, :index, :show]
+    # raise: false 
     # raise: false has to be added to this since recently to prevent error
 
     def index
         @users = User.all
         render json: @users, :except => [:password_digest], 
-        # :include => [:username, :email, :bio, :avatar]
-        :include => [:username, :user_type, :email, :bio, :avatar]
+        # :include => [:username, :email, :bio]
+        :include => [:username, :email, :bio, :frienders, :friendeds]
     end
 
     def show
@@ -15,8 +16,8 @@ class Api::V1::UsersController < ApplicationController
     end
  
     def profile
-        render json: { user: current_user }, :except => [:password_digest], 
-        :include => [:username, :email, user_type, :bio, :avatar]
+      render json: { user: current_user }, :except => [:password_digest], 
+      :include => [:username, :email, :bio, :frienders, :friendeds]
     end
   
     def create
@@ -51,7 +52,7 @@ class Api::V1::UsersController < ApplicationController
     private
   
     def user_params
-      params.require(:user).permit(:username, :email, :user_type, :password, :bio, :avatar)
+      params.require(:user).permit(:username, :first_name, :last_name, :email, :password, :bio)
     end
     
 end
