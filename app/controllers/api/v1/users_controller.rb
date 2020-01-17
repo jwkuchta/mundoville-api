@@ -18,9 +18,8 @@ class API::V1::UsersController < ApplicationController
   def profile
     @user = current_user
     # render json: {@user: current_user}
-    render json: @user
-    # :except => [:password_digest]
-    # :include => [:frienders, :friendeds]
+    render json: @user, :except => [:password_digest],
+    :include => [:frienders, :friendeds]
   end
 
   def create
@@ -34,11 +33,12 @@ class API::V1::UsersController < ApplicationController
   end
 
   def update
-      user = User.find_by(id: params['id'])
-      if user.update(user_params)
+    # byebug
+      @user = User.find_by(id: params['id'])
+      if @user.update(user_params)
           render json: { message: 'user successfully updated' }
       else
-          render json: { error: 'could not update user'}, status: :not_acceptable
+          render json: { message: 'could not update user'}
       end
   end
 
