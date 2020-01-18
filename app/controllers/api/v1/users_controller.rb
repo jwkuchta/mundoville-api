@@ -7,7 +7,7 @@ class API::V1::UsersController < ApplicationController
       @users = User.all
       render json: @users, :except => [:password_digest], 
       # :include => [:username, :email, :bio, :frienders, :friendeds]
-      :include => [:username, :email, :bio]
+      :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic]
   end
 
   def show
@@ -54,7 +54,7 @@ class API::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :first_name, :last_name, :email, :password, :bio)
+    params.require(:user).permit(:username, :first_name, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3)
   end
   
 end
