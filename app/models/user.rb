@@ -17,6 +17,7 @@ class User < ApplicationRecord
     # active record associations
     has_many_attached :images
     has_one_attached :profile_pic
+    # delegate :profile_pic_url, to: :profile_pic_url, allow_nil: true
 
     # has_secure_password takes care of this for us:
     # def authenticate(plaintext_password)
@@ -26,6 +27,14 @@ class User < ApplicationRecord
     #       false
     #     end
     # end
+
+    def profile_pic_url
+        if self.profile_pic_blob != nil
+          url = Rails.application.routes.url_helpers.rails_blob_path(self.profile_pic, only_path: true)
+        else
+          return ''
+        end
+    end
 
 end
 
