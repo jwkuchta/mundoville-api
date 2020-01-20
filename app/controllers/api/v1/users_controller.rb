@@ -2,6 +2,7 @@ class API::V1::UsersController < ApplicationController
   skip_before_action :authorized, only: [:create, :index, :show]
   # raise: false 
   # raise: false has to be added to this since recently to prevent error
+  include Rails.application.routes.url_helpers
 
   def index
       @users = User.all
@@ -13,6 +14,7 @@ class API::V1::UsersController < ApplicationController
   def show
     @user = User.find_by(id: params['id'])
     render json: @user, :except => [:password_digest]
+    # render :show
   end
 
   def profile
@@ -54,7 +56,7 @@ class API::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :first_name, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3)
+    params.require(:user).permit(:id, :username, :first_name, :profile_pic, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3)
   end
   
 end

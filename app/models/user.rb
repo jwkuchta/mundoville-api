@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
     # include ActiveModel::Serializers::JSON
+    include Rails.application.routes.url_helpers
 
     has_secure_password
     validates :username, uniqueness: {case_sensitive: false}
@@ -17,7 +18,7 @@ class User < ApplicationRecord
     # active record associations
     has_many_attached :images
     has_one_attached :profile_pic
-    # delegate :profile_pic_url, to: :profile_pic_url, allow_nil: true
+    delegate :profile_pic_url, to: :profile_pic_url, allow_nil: true
 
     # has_secure_password takes care of this for us:
     # def authenticate(plaintext_password)
@@ -30,7 +31,9 @@ class User < ApplicationRecord
 
     def profile_pic_url
         if self.profile_pic_blob != nil
-          url = Rails.application.routes.url_helpers.rails_blob_path(self.profile_pic, only_path: true)
+          Rails.application.routes.url_helpers.rails_blob_path(self.profile_pic, only_path: true)
+          # Rails.application.routes.url_helpers.url_for(self.profile_pic)
+          
         else
           return ''
         end
