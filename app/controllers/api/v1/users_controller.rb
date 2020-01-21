@@ -37,6 +37,10 @@ class API::V1::UsersController < ApplicationController
   def update
     # byebug
       @user = User.find_by(id: params['id'])
+
+      if @user.profile_pic != nil && user_params['profile_pic'] != nil 
+        @user.profile_pic.detach()
+      end
       if @user.update(user_params)
           render json: { message: 'user successfully updated' }
       else

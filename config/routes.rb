@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     # namespace :v1, defaults: {format: :json} do
     namespace :v1 do
       resources :users
+      resources :exchanges, only: [:create, :index]
+      resources :messages, only: [:update, :index]
       post '/users', to: 'users#index'
       get '/users', to: 'users#index'
       get '/users/:id', to: 'users#show'
@@ -10,6 +12,8 @@ Rails.application.routes.draw do
       get '/login', to: 'auth#show'
       get '/profile', to: 'users#profile'
       patch '/upload', to: 'users#upload'
+      post '/findExchanges', to: 'exchanges#findExchanges'
+      
     end
   end
 end
@@ -22,3 +26,4 @@ end
 # post '/upload', to: 'photos#upload'
 # post '/photos', to: 'photos#allphotos'
 # post '/featured', to: 'photos#featured'
+

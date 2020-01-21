@@ -1,4 +1,10 @@
 class API::V1::FriendshipsController < ApplicationController
+    skip_before_action :authorized, only: [:index]
+
+    def index
+        friendships = Friendship.all 
+        render json: frienships
+    end
 
     def create
         friendship = Friendship.new(user_id: params['user_id'], friended_id: params['friended_id'])
