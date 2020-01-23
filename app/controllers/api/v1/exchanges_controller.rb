@@ -18,8 +18,10 @@ class API::V1::ExchangesController < ApplicationController
     def create
         # byebug
         if Exchange.between(params[:first_user_id], params[:second_user_id]).present?
+            # byebug
             exchange = Exchange.between(params[:first_user_id], params[:second_user_id]).first
             message = Message.new(body: params[:body], exchange_id: exchange.id, user_id: params[:first_user_id])
+            # byebug
             if message.save
                 render json: exchange, :include => [:messages]
             end
@@ -37,7 +39,7 @@ class API::V1::ExchangesController < ApplicationController
     private
 
     def exchange_params
-        params.require(:exchange).permit(:first_user_id, :second_user_id, messages_attributes: [:body])
+        params.require(:exchange).permit(:id, :first_user_id, :second_user_id, messages_attributes: [:body])
     end
 
 end
