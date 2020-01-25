@@ -1,4 +1,5 @@
 class API::V1::ReviewsController < ApplicationController
+    skip_before_action :authorized, only: [:index]
 
     def index
         reviews = Review.all
@@ -8,11 +9,11 @@ class API::V1::ReviewsController < ApplicationController
     def create
         review = Review.new(review_params)
         if review.save
-            user = User.find_by(id: params[:reviewed_id])
+            reviewedUser = User.find_by(id: params[:reviewed_id])
             reviews = Review.all.filter{ |r| r.reviewed_id == params[:reviewed_id] }
-            baseRating = 0
-            reviews.each { |r| baseRating = baseRating + r.rating } 
-            user.rating = baseRating / reviews.count
+            totalRating = 0
+            reviews.map {|r| totalRating += r.rating} 
+            user.rating = totalRating / reviews.count
             if user.save
                 render json: review
             end
