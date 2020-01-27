@@ -3,25 +3,48 @@ class API::V1::FriendshipsController < ApplicationController
 
     def index
         friendships = Friendship.all 
-        render json: frienships
+        render json: friendships
     end
 
     def create
-        friendship = Friendship.new(user_id: params['user_id'], friended_id: params['friended_id'])
-        if friendship.save
-            render json: friendship, status: :accepted
-        else
-            render json: { error: "Unable to create friendship" }
+        # byebug
+        f1 = Friendship.find_by(user_id: params['user_id'], friend_id: params['friend_id'])
+        f2 = Friendship.find_by(user_id: params['friend_id'], friend_id: params['user_id'])
+        existing = f1 || f2
+
+        # byebug
+        
+        if existing == nil
+            friendship = Friendship.new(user_id: params['user_id'], friend_id: params['friend_id'])
+            if friendship.save
+                render json: friendship, status: :accepted
+            else
+                render json: { error: "Unable to create friendship" }
+            end
         end
     end
 
     def unfriend
-        friendship = Friendship.find_by(user_id: params['user_id'], friended_id: params['friended_id'])
-        id = friendship.friended_id
+        # byebug
+        f1 = Friendship.find_by(user_id: params['user_id'], friend_id: params['friend_id']) 
+        f2 = Friendship.find_by(user_id: params['friend_id'], friend_id: params['user_id'])
+        friendship = f1 || f2
+
+        # id = friendship.friend_id
         if friendship.destroy
-            render json: {message: id}
+            friendships = Friendship.all
+            render json: friendship
         else
             render json: { error: "Unable to process unfriending" }
         end
     end
+
+    private
+
+    def friendship_params
+        params.require(:friendship).permit(:user_id, :friend_id)
+    end
 end
+
+
+

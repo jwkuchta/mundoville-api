@@ -8,7 +8,8 @@ class API::V1::UsersController < ApplicationController
       @users = User.all
       render json: @users, :except => [:password_digest], 
       # :include => [:username, :email, :bio, :frienders, :friendeds]
-      :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic, :reviews]
+      # :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic, :reviews, :friendships]
+      :include => [:reviews, :friendships]
   end
 
   def show
@@ -21,7 +22,8 @@ class API::V1::UsersController < ApplicationController
     @user = current_user
     # render json: {@user: current_user}
     render json: @user, :except => [:password_digest],
-    :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic, :reviews]
+    # :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic, :reviews, :friendships]
+    :include => [:reviews, :friendships]
   end
 
   def create
