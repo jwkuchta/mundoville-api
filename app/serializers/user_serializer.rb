@@ -1,7 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :first_name, :last_name, :profile_pic_url, 
   :bio, :email, :country, :city, :language1, :language2, :language3, 
-  :friendships, :reviews
+  :friendships, :reviews, :rating
   include Rails.application.routes.url_helpers
 
   # def image

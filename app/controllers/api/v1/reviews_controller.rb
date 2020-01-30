@@ -7,6 +7,7 @@ class API::V1::ReviewsController < ApplicationController
     end
 
     def create
+        # byebug
         review = Review.new(review_params)
         if review.save
             reviewedUser = User.find_by(id: params[:reviewed_id])
@@ -23,7 +24,7 @@ class API::V1::ReviewsController < ApplicationController
     private
 
     def review_params
-        params.require(:review).permit(:user_id, :reviewed_id, :rating, :content)
+        params.require(:review).permit(:user_id, :reviewed_id, :rating, :body)
     end
 
 end

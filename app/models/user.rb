@@ -35,5 +35,23 @@ class User < ApplicationRecord
         end
     end
 
+    def full_name
+      if self.first_name && self.last_name
+        self.first_name + " " + self.last_name
+      else
+        return nul
+      end
+    end
+
+    def rating
+      if self.reviews.length.to_i == 0
+        return nil
+      else
+        total_rating = self.reviews.map {|r| r.rating}.sum.to_f
+        num_of_reviews = self.reviews.length.to_f
+        total_rating / num_of_reviews
+      end
+    end
+
 end
 
