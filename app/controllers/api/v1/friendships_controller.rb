@@ -40,7 +40,7 @@ class API::V1::FriendshipsController < ApplicationController
     # end
 
     def create
-        # byebug
+        byebug
         f1 = Friendship.find_by(user_id: params['user_id'], friend_id: params['friend_id'])
         f2 = Friendship.find_by(user_id: params['friend_id'], friend_id: params['user_id'])
         existing = f1 || f2
@@ -58,7 +58,7 @@ class API::V1::FriendshipsController < ApplicationController
     end
 
     def unfriend
-        # byebug
+        byebug
         f1 = Friendship.find_by(user_id: params['user_id'], friend_id: params['friend_id']) 
         f2 = Friendship.find_by(user_id: params['friend_id'], friend_id: params['user_id'])
         friendship = f1 || f2
