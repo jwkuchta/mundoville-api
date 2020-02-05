@@ -4,8 +4,6 @@ class API::V1::MessagesController < ApplicationController
     def index
         messages = Message.all
         render json: messages 
-        # :include => [:username, :email, :bio, :frienders, :friendeds]
-        # :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic]
     end
 
     def update

@@ -1,6 +1,5 @@
 class User < ApplicationRecord
 
-    # include ActiveModel::Serializers::JSON
     include Rails.application.routes.url_helpers
 
     has_secure_password
@@ -12,7 +11,6 @@ class User < ApplicationRecord
     has_many :friends, class_name: 'Friendship', foreign_key: 'user_id'
     has_many :friendeds, class_name: 'Friendship', foreign_key: 'friend_id'
     has_many :friendships
-    # has_many :friends, :through => :friendships
 
     # review
     has_many :reviews, class_name: "Review", foreign_key: "reviewed_id"
@@ -22,10 +20,6 @@ class User < ApplicationRecord
     has_many_attached :images
     has_one_attached :profile_pic
     delegate :profile_pic_url, to: :profile_pic_url, allow_nil: true
-
-    # # messages
-    # has_many :exchanges
-    # has_many :messages, through: :exchanges
 
     def profile_pic_url
         if self.profile_pic_blob != nil

@@ -7,22 +7,17 @@ class API::V1::UsersController < ApplicationController
   def index
       @users = User.all
       render json: @users, :except => [:password_digest], 
-      # :include => [:username, :email, :bio, :frienders, :friendeds]
-      # :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic, :reviews, :friendships]
       :include => [:reviews, :friendships]
   end
 
   def show
     @user = User.find_by(id: params['id'])
     render json: @user, :except => [:password_digest]
-    # render :show
   end
 
   def profile
     @user = current_user
-    # render json: {@user: current_user}
     render json: @user, :except => [:password_digest],
-    # :include => [:username, :email, :bio, :country, :city, :language1, :language2, :language3, :profile_pic, :reviews, :friendships]
     :include => [:reviews, :friendships]
   end
 
