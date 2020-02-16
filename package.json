@@ -1,0 +1,21 @@
+{
+    "name": "mundoville-api",
+    "version": "1.0.0",
+    "description": "The best package you will ever find.",
+    "main": "index.js",
+    "repository": {
+      "url": "https://github.com/jwkuchta/mundoville-api",
+      "type": "git"
+    },
+    "author": "Justyna Kuchta",
+    "license": "MIT",
+    "scripts": {
+        "build": "cd client && npm install && npm build && cd ..",
+        "deploy": "cp -a client/build/. public/",
+        "postinstall": "npm build && npm deploy && echo 'Client built!'"
+    }
+  }
+  
+  
+
+  
