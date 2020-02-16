@@ -7,13 +7,16 @@
       "url": "https://github.com/jwkuchta/mundoville-api",
       "type": "git"
     },
+    "engines": {
+        "node": "6.3.1"
+    },
     "author": "Justyna Kuchta",
     "license": "MIT",
     "scripts": {
-        "build": "cd .. && cd mundoville-client && yarn install && yarn build && cd ..",
+        "build": "cd client && npm install && npm run build && cd ..",
         "deploy": "cp -a client/build/. public/",
-        "postinstall": "yarn build && yarn deploy && echo 'Client built!'"
-    }
+        "postinstall": "npm run build && npm run deploy && echo 'Client built!'"
+      }
   }
   
   
