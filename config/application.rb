@@ -24,6 +24,14 @@ module MundovilleApi
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'http://localhost:3000', 'https://mundoville.herokuapp.com/' 
+        #replace this url with that of your own heroku client app
+        resource '*', :headers => :any, :methods => [:get]
+      end
+    end
+
     # ActiveRecord::Base.include_root_in_json = true
 
     # Settings in config/environments/* take precedence over those specified here.
