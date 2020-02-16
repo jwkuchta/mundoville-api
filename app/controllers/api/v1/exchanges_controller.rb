@@ -4,7 +4,6 @@ class API::V1::ExchangesController < ApplicationController
     def index
         exchanges = Exchange.all
         render json: exchanges, :include => [:messages]
-        # render json: exchanges
     end
 
     def findExchanges
