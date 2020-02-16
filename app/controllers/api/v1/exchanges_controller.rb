@@ -8,9 +8,6 @@ class API::V1::ExchangesController < ApplicationController
     end
 
     def findExchanges
-        # <ActionController::Parameters {"id"=>1, "controller"=>"api/v1/exchanges", 
-        # "action"=>"findExchanges", "exchange"=>{"id"=>1}} permitted: false>
-        # byebug
         exchanges = Exchange.where("first_user_id = ? OR second_user_id = ?", params[:id], params[:id])
         render json: exchanges, :include => [:messages]
     end
