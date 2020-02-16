@@ -10,7 +10,7 @@
     "author": "Justyna Kuchta",
     "license": "MIT",
     "scripts": {
-        "build": "cd client && yarn install && yarn build && cd ..",
+        "build": "cd .. && cd mundoville-client && yarn install && yarn build && cd ..",
         "deploy": "cp -a client/build/. public/",
         "postinstall": "yarn build && yarn deploy && echo 'Client built!'"
     }
