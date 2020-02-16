@@ -1,2 +1,2 @@
-web: bundle exec rails server -p ${:-3000}
-worker: bundle exec rake jobs:work
+web: bundle exec rails s
+release: bundle exec bin/rake db:migrate
