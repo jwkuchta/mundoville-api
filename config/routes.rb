@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       post '/login', to: 'auth#create'
       get '/login', to: 'auth#show'
       get '/profile', to: 'users#profile'
+      patch '/users/:id' to 'users#update'
       post '/findExchanges', to: 'exchanges#findExchanges'
       post '/unfriend', to: 'friendships#unfriend'
       
