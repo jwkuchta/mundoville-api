@@ -50,7 +50,7 @@ class API::V1::UsersController < ApplicationController
       if user.destroy
           render json: { message: 'User successfully destroyed' }
       else
-          render json: { message: 'Could not delete user. Please try again.'}
+          render json: { message: 'Could not delete user. Please try again'}
       end
   end
 
