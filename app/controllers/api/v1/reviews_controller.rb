@@ -2,6 +2,7 @@ class API::V1::ReviewsController < ApplicationController
     skip_before_action :authorized, only: [:index]
 
     def index
+        # byebug
         reviews = Review.all
         render json: reviews
     end
