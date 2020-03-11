@@ -2,8 +2,9 @@ class User < ApplicationRecord
 
     include Rails.application.routes.url_helpers
 
-    has_secure_password
-    validates :username, uniqueness: {case_sensitive: false}
+    # has_secure_password
+    # validates :username, uniqueness: {case_sensitive: false}
+    validates :nickname, uniqueness: {case_sensitive: false}
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
     
     # self-referential associations

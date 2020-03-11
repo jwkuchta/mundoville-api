@@ -1,5 +1,6 @@
 class API::V1::ReviewsController < ApplicationController
-    skip_before_action :authorized, only: [:index]
+    # skip_before_action :authorized, only: [:index]
+    # skip_before_action :authorized
 
     def index
         # byebug

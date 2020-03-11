@@ -1,5 +1,6 @@
 class API::V1::ExchangesController < ApplicationController
-    skip_before_action :authorized, only: [:index]
+    # skip_before_action :authorized, only: [:index]
+    # skip_before_action :authorized
 
     def index
         exchanges = Exchange.all
