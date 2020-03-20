@@ -8,22 +8,24 @@ class API::V1::ExchangesController < ApplicationController
     end
 
     def findExchanges
+        byebug
         exchanges = Exchange.where("first_user_id = ? OR second_user_id = ?", params[:id], params[:id])
         render json: exchanges, :include => [:messages]
     end
     
     def create
-        # byebug
+        byebug
         if Exchange.between(params[:first_user_id], params[:second_user_id]).present?
-            # byebug
+            byebug
             exchange = Exchange.between(params[:first_user_id], params[:second_user_id]).first
             message = Message.new(body: params[:body], exchange_id: exchange.id, user_id: params[:first_user_id])
-            # byebug
+            byebug
             if message.save
                 render json: exchange, :include => [:messages]
             end
         else
             exchange = Exchange.new(exchange_params)
+            byebug
             if exchange.save
                 message = Message.new(body: params[:body], exchange_id: exchange.id, user_id: params[:first_user_id])
                 if message.save
@@ -36,7 +38,7 @@ class API::V1::ExchangesController < ApplicationController
     private
 
     def exchange_params
-        params.require(:exchange).permit(:id, :first_user_id, :second_user_id, messages_attributes: [:body])
+        params.require(:exchange).permit(:sub, :id, :first_user_id, :second_user_id, messages_attributes: [:body])
     end
 
 end
