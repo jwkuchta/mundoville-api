@@ -6,7 +6,7 @@ class API::V1::AuthController < ApplicationController
     # byebug
     @user = User.find_by(sub: user_login_params[:sub])
     if @user && @user.authenticate(user_login_params[:password])
-      token = encode_token({ user_id: @user.id })
+      # token = encode_token({ user_id: @user.id })
       render json: { user: UserSerializer.new(@user), jwt: token }, status: :accepted
     else
       # render json: { message: 'Invalid username or password' }, status: :unauthorized
@@ -15,13 +15,13 @@ class API::V1::AuthController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: params['id'])
+    @user = User.find_by(sub: params['sub'])
     render json: @user
   end
 
   private
 
   def user_login_params
-    params.require(:user).permit(:username, :password, :email)
+    params.require(:user).permit(:username, :password, :email, :sub)
   end
 end

@@ -37,13 +37,13 @@ class API::V1::UsersController < ApplicationController
   end
 
   def profile
-    byebug
+    # byebug
     @user = User.find_by(sub: params['sub'])
     render json: @user
   end
 
   def update
-    byebug
+    # byebug
       @user = User.find_by(sub: params['sub'])
       byebug
 
@@ -51,7 +51,7 @@ class API::V1::UsersController < ApplicationController
         @user.profile_pic.detach()
       end
       if @user.update(user_params)
-        byebug
+        # byebug
           render json: { message: 'user successfully updated' }
       else
           render json: { message: 'could not update user'}
@@ -72,7 +72,7 @@ class API::V1::UsersController < ApplicationController
   def user_params
     # params.require(:user).permit(:id, :username, :first_name, :profile_pic, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation, :yob)
     # params.require(:user).permit(:id, :updated_at, :email_verified, :sub, :nickname, :name, :first_name, :profile_pic, :picture, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation, :yob)
-    params.require(:user).permit(:id, :email, :name, :nickname, :picture, :profile_pic, :sub, :occupation, :age, :language1, :language2, :language3, :bio, :country, :city, :yob)
+    params.require(:user).permit(:id, :first_name, :last_name, :email, :name, :nickname, :picture, :profile_pic, :sub, :occupation, :age, :language1, :language2, :language3, :bio, :country, :city, :yob)
   end
 
   
