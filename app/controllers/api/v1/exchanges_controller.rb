@@ -1,6 +1,5 @@
 class API::V1::ExchangesController < ApplicationController
     # skip_before_action :authorized, only: [:index]
-    # skip_before_action :authorized
 
     def index
         exchanges = Exchange.all
@@ -8,7 +7,6 @@ class API::V1::ExchangesController < ApplicationController
     end
 
     def findExchanges
-        byebug
         exchanges = Exchange.where("first_user_id = ? OR second_user_id = ?", params[:id], params[:id])
         render json: exchanges, :include => [:messages]
     end
@@ -25,7 +23,6 @@ class API::V1::ExchangesController < ApplicationController
             end
         else
             exchange = Exchange.new(exchange_params)
-            byebug
             if exchange.save
                 message = Message.new(body: params[:body], exchange_id: exchange.id, user_id: params[:first_user_id])
                 if message.save
@@ -38,7 +35,7 @@ class API::V1::ExchangesController < ApplicationController
     private
 
     def exchange_params
-        params.require(:exchange).permit(:sub, :id, :first_user_id, :second_user_id, messages_attributes: [:body])
+        params.require(:exchange).permit(:id, :first_user_id, :second_user_id, messages_attributes: [:body])
     end
 
 end
