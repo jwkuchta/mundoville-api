@@ -12,12 +12,12 @@ class API::V1::ExchangesController < ApplicationController
     end
     
     def create
-        byebug
+        # byebug
         if Exchange.between(params[:first_user_id], params[:second_user_id]).present?
-            byebug
+            # byebug
             exchange = Exchange.between(params[:first_user_id], params[:second_user_id]).first
             message = Message.new(body: params[:body], exchange_id: exchange.id, user_id: params[:first_user_id])
-            byebug
+            # byebug
             if message.save
                 render json: exchange, :include => [:messages]
             end

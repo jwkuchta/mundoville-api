@@ -45,7 +45,7 @@ class API::V1::UsersController < ApplicationController
   def update
     # byebug
       @user = User.find_by(sub: params['sub'])
-      byebug
+      # byebug
 
       if @user.profile_pic != nil && user_params['profile_pic'] != nil 
         @user.profile_pic.detach()
