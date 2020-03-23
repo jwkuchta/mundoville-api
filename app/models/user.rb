@@ -5,7 +5,8 @@ class User < ApplicationRecord
     # has_secure_password
     # validates :username, uniqueness: {case_sensitive: false}
     validates :sub, uniqueness: {case_sensitive: false}
-    validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
+    validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, unless: lambda { self.email.blank? }
+    # validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
     
     # self-referential associations
     # friendship
