@@ -5,23 +5,27 @@ class API::V1::UsersController < ApplicationController
   include Rails.application.routes.url_helpers
 
   def index
+    # byebug
       @users = User.all
       render json: @users, :except => [:password_digest], 
       :include => [:reviews, :friendships]
   end
 
   def show
+    # byebug
     @user = User.find_by(id: params['id'])
     render json: @user, :except => [:password_digest]
   end
 
   def profile
+    # byebug
     @user = current_user
     render json: @user, :except => [:password_digest],
     :include => [:reviews, :friendships]
   end
 
   def create
+    # byebug
     @user = User.create(user_params)
     if @user.valid?
       @token = encode_token({ user_id: @user.id })
@@ -57,7 +61,7 @@ class API::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:id, :username, :first_name, :profile_pic, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation, :age)
+    params.require(:user).permit(:id, :username, :first_name, :profile_pic, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation)
   end
   
 end
