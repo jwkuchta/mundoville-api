@@ -1,5 +1,6 @@
 class API::V1::UsersController < ApplicationController
-  skip_before_action :authorized, only: [:create, :index, :show]
+  # skip_before_action :authorized, only: [:create, :index, :show]
+  # skip_before_action :authorized
   # raise: false 
   # raise: false has to be added to this since recently to prevent error
   include Rails.application.routes.url_helpers
@@ -12,37 +13,48 @@ class API::V1::UsersController < ApplicationController
   end
 
   def show
-    # byebug
-    @user = User.find_by(id: params['id'])
-    render json: @user, :except => [:password_digest]
+    @user = User.find_by(sub: params['sub'])
+    # render json: @user, :except => [:password_digest]
+    render json: @user
   end
 
-  def profile
-    # byebug
-    @user = current_user
-    render json: @user, :except => [:password_digest],
-    :include => [:reviews, :friendships]
-  end
+  # def profile
+  #   byebug
+  #   @user = current_user
+  #   render json: @user, :except => [:password_digest],
+  #   :include => [:reviews, :friendships]
+  # end
 
   def create
     # byebug
     @user = User.create(user_params)
     if @user.valid?
-      @token = encode_token({ user_id: @user.id })
-      render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
+      # byebug
+      # @token = encode_token({ user_id: @user.id })
+      # byebug
+      render json: { user: UserSerializer.new(@user)}, status: :created
     else
+      # byebug
       render json: { error: 'failed to create user' }, status: :not_acceptable
     end
   end
 
+  def profile
+    # byebug
+    @user = User.find_by(sub: params['sub'])
+    render json: @user
+  end
+
   def update
     # byebug
-      @user = User.find_by(id: params['id'])
+      @user = User.find_by(sub: params['sub'])
+      # byebug
 
       if @user.profile_pic != nil && user_params['profile_pic'] != nil 
         @user.profile_pic.detach()
       end
       if @user.update(user_params)
+        # byebug
           render json: { message: 'user successfully updated' }
       else
           render json: { message: 'could not update user'}
@@ -50,7 +62,7 @@ class API::V1::UsersController < ApplicationController
   end
 
   def destroy
-      user = User.find_by(id: params['id'])
+      user = User.find_by(sub: params['sub'])
       if user.destroy
           render json: { message: 'User successfully destroyed' }
       else
@@ -61,7 +73,10 @@ class API::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:id, :username, :first_name, :profile_pic, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation)
+    # params.require(:user).permit(:id, :username, :first_name, :profile_pic, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation, :yob)
+    # params.require(:user).permit(:id, :updated_at, :email_verified, :sub, :nickname, :name, :first_name, :profile_pic, :picture, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation, :yob)
+    params.require(:user).permit(:id, :id_provider, :first_name, :last_name, :email, :name, :nickname, :picture, :profile_pic, :sub, :occupation, :age, :language1, :language2, :language3, :bio, :country, :city, :yob, :updated_at)
   end
+
   
 end
