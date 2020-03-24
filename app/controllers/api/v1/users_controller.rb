@@ -74,7 +74,7 @@ class API::V1::UsersController < ApplicationController
   def user_params
     # params.require(:user).permit(:id, :username, :first_name, :profile_pic, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation, :yob)
     # params.require(:user).permit(:id, :updated_at, :email_verified, :sub, :nickname, :name, :first_name, :profile_pic, :picture, :last_name, :email, :password, :bio, :country, :city, :language1, :language2, :language3, :occupation, :yob)
-    params.require(:user).permit(:id, :first_name, :last_name, :email, :name, :nickname, :picture, :profile_pic, :sub, :occupation, :age, :language1, :language2, :language3, :bio, :country, :city, :yob, :updated_at)
+    params.require(:user).permit(:id, :id_provider, :first_name, :last_name, :email, :name, :nickname, :picture, :profile_pic, :sub, :occupation, :age, :language1, :language2, :language3, :bio, :country, :city, :yob, :updated_at)
   end
 
   
