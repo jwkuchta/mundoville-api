@@ -6,6 +6,7 @@ class API::V1::UsersController < ApplicationController
   include Rails.application.routes.url_helpers
 
   def index
+    # byebug
       @users = User.all
       render json: @users, :except => [:password_digest], 
       :include => [:reviews, :friendships]
