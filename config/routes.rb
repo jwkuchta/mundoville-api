@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     # namespace :v1, defaults: {format: :json} do
     namespace :v1 do
       resources :users
-      resources :exchanges, only: [:create, :index]
+      resources :exchanges, only: [:create, :index, :show]
       resources :messages, only: [:update, :index]
       resources :reviews, only: [:index, :create]
       resources :friendships, only: [:index, :create]

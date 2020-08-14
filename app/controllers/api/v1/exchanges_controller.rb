@@ -1,5 +1,10 @@
 class API::V1::ExchangesController < ApplicationController
-    skip_before_action :authorized, only: [:index]
+    skip_before_action :authorized, only: [:index, :show]
+
+    def show
+        exchange = Exchange.find_by(id: params[:id])
+        render json: exchange
+    end
 
     def index
         exchanges = Exchange.all
